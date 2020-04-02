@@ -1,4 +1,4 @@
-name: Openwrt-AutoBuild
+name: Openwrt-AutoBuild-IPQ40XX
 
 on:
 #  release:
