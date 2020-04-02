@@ -103,7 +103,7 @@ jobs:
         git config user.email "bot@github.com"
         git add .
         git commit -m "$DATE"
-        git push --force --quiet https://$SUPER_TOKEN@github.com/hyird/action-openwrt.git  HEAD:dl
+        git push --force --quiet https://$SUPER_TOKEN@github.com/hyird/Openwrt-AutoBuild.git  HEAD:dl
         
         
         
