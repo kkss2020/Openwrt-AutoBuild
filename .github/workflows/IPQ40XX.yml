@@ -24,6 +24,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    name: Build ${{matrix.target}}
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [normal, test]
+        # ########### Add your target name below ###########
+        # E.g. target: [x86_64, wdr4310v1]
+        target: [ipq40xx, x64] 
+    
+env:
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
+  DIY_SH: diy.sh
+  TZ: Asia/Shanghai
+
     steps:
     - name: Checkout
       uses: actions/checkout@master
@@ -47,7 +62,7 @@ jobs:
         curl -fsSL https://raw.githubusercontent.com/P3TERX/dotfiles/master/.bashrc >> ~/.bashrc
         
     - name: Clone source code
-      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+      run: git clone $REPO_URL -b $REPO_BRANCH openwrt
 
     - name: Add Lienol packages
       run: cd openwrt && echo "src-git lienol https://github.com/Lienol/openwrt-package" >> feeds.conf.default && cat feeds.conf.default
@@ -60,7 +75,7 @@ jobs:
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        [ -e config/${{matrix.target}}.config ] && mv config/${{matrix.target}}.config openwrt/.config
         chmod +x $DIY_SH
         cd openwrt
         ../$DIY_SH
