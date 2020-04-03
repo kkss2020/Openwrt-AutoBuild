@@ -78,7 +78,7 @@ jobs:
         if [ -f "user/${{matrix.target}}/custom.sh" ]; then
         (
            cd openwrt
-           /bin/bash "user/${{matrix.target}}/custom.sh"
+           /bin/bash "../user/${{matrix.target}}/custom.sh"
          )
          fi
 
