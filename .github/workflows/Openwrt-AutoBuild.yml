@@ -125,7 +125,7 @@ jobs:
         git config user.name "bot"
         git config user.email "bot@github.com"
         git add .
-        git commit -m "$DATE"arm_cortex-a7_neon-vfpv4
+        git commit -m "$DATE"_${{matrix.target}}
         git push --force --quiet https://$SUPER_TOKEN@github.com/hyird/Openwrt-AutoBuild.git  HEAD:${{matrix.target}}_packages
         rm -rf .git
     - name:  Push targets
@@ -137,7 +137,7 @@ jobs:
         git config user.name "bot"
         git config user.email "bot@github.com"
         git add .
-        git commit -m "$DATE"
+        git commit -m "$DATE_${{matrix.target}}"
         git push --force --quiet https://$SUPER_TOKEN@github.com/hyird/Openwrt-AutoBuild.git  HEAD:${{matrix.target}}_targets
         rm -rf .git
     - name: Organize files
