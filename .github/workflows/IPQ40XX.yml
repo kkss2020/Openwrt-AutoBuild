@@ -16,7 +16,6 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: config/ipq40xx.config
   DIY_SH: diy.sh
   TZ: Asia/Shanghai
 
@@ -28,9 +27,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        mode: [normal, test]
-        # ########### Add your target name below ###########
-        # E.g. target: [x86_64, wdr4310v1]
         target: [ipq40xx, x64] 
     
   env:
