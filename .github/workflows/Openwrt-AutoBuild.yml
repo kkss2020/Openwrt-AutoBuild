@@ -61,8 +61,14 @@ jobs:
 
     - name: Load custom configuration
       run: |
-        [ -e files ] && mv files openwrt/files
-        mv config/${{matrix.target}}.config openwrt/.config
+        mv user/${{matrix.target}}/.config openwrt/.config
+        
+        if [ -n "$(ls -A "uesr/default/patches" 2>/dev/null)" ]; then
+        (
+          find "uesr/default/patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d 'openwrt' -p0 --forward"
+        true
+        )
+        fi
 
         if [ -n "$(ls -A "uesr/${{matrix.target}}/patches" 2>/dev/null)" ]; then
         (
@@ -70,6 +76,12 @@ jobs:
         true
         )
         fi
+        
+        if [ -f "uesr/${{matrix.target}}/custom.sh" ]; then
+        (
+           cd openwrt
+           /bin/bash "${BUILDER_PROFILE_DIR}/custom.sh"
+           )
 
     - name: Download package
       id: package
@@ -85,7 +97,7 @@ jobs:
       run: |
         cd openwrt
         echo -e "3 thread compile"
-        make -j2 || make -j1 V=s
+        make -j3 || make -j1 V=s
 
     - name: Upload packages directory
       uses: actions/upload-artifact@master
@@ -122,6 +134,18 @@ jobs:
         git add .
         git commit -m "$DATE"
         git push --force --quiet https://$SUPER_TOKEN@github.com/hyird/Openwrt-AutoBuild.git  HEAD:${{matrix.target}}_targets/
+        
+    - name: Organize files
+      id: organize
+      run: |
+        cd openwrt/bin
+        echo "::set-env name=FIRMWARE::$PWD"
+        echo "::set-output name=status::success"
+        
+    - name: Upload firmware to cowtransfer
+      run: |
+        curl -sL https://git.io/cowtransfer | sh
+        ./cowtransfer-uploader -s -p 8 ${FIRMWARE}
         
     - name: WeChat notification
       run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{matrix.target}}编译完成
