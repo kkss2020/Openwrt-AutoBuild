@@ -16,7 +16,6 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  DIY_SH: diy.sh
   TZ: Asia/Shanghai
 
 jobs:
@@ -64,6 +63,7 @@ jobs:
 
     - name: Load custom configuration
       run: |
+        set -eo pipefail
         [ -e files ] && mv files openwrt/files
         [ -e config/${{matrix.target}}.config ] && mv config/${{matrix.target}}.config openwrt/.config
         chmod +x $DIY_SH
