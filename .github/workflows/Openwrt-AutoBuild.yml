@@ -66,9 +66,6 @@ jobs:
         set -eo pipefail
         [ -e files ] && mv files openwrt/files
         [ -e config/${{matrix.target}}.config ] && mv config/${{matrix.target}}.config openwrt/.config
-        chmod +x $DIY_SH
-        cd openwrt
-        ../$DIY_SH
     - name: Download package
       id: package
       run: |
