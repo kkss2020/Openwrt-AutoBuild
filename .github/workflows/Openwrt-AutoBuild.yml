@@ -61,7 +61,7 @@ jobs:
 
     - name: Load custom configuration
       run: |
-        mv user/${{matrix.target}}/.config openwrt/.config
+        mv user/${{matrix.target}}/config.diff openwrt/.config
         
         if [ -n "$(ls -A "uesr/default/patches" 2>/dev/null)" ]; then
         (
