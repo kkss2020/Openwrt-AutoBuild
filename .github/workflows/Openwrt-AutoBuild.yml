@@ -65,7 +65,13 @@ jobs:
       run: |
         set -eo pipefail
         [ -e files ] && mv files openwrt/files
-        [ -e config/${{matrix.target}}.config ] && mv config/${{matrix.target}}.config openwrt/.config
+        if [ ! -f "config/${{matrix.target}}.config" ];then
+           mv config/${{matrix.target}}.config openwrt/.config
+        else
+           echo "misssing config"
+           echo "::set-output name=status::failure"
+        fi
+
     - name: Download package
       id: package
       run: |
