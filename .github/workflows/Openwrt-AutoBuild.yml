@@ -60,9 +60,7 @@ jobs:
       run: cd openwrt && ./scripts/feeds install -a
 
     - name: Load custom configuration
-      run: |
-        mv user/${{matrix.target}}/config.diff openwrt/.config
-        
+      run: |        
         if [ -n "$(ls -A "user/default/patches" 2>/dev/null)" ]; then
         (
           find "user/default/patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d 'openwrt' -p0 --forward"
@@ -86,6 +84,7 @@ jobs:
       id: package
       run: |
         cd openwrt
+        mv user/${{matrix.target}}/config.diff openwrt/.config
         make defconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
@@ -96,7 +95,7 @@ jobs:
       run: |
         cd openwrt
         echo -e "3 thread compile"
-        make -j3 || make -j1 V=s
+        make -j3
 
     - name: Upload packages directory
       uses: actions/upload-artifact@master
