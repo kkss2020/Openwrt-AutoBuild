@@ -64,14 +64,8 @@ jobs:
 
     - name: Load custom configuration
       run: |
-        set -eo pipefail
         [ -e files ] && mv files openwrt/files
-        if [ ! -f "config/${{matrix.target}}.config" ];then
-           mv config/${{matrix.target}}.config openwrt/.config
-        else
-           echo "misssing config"
-           echo "::set-output name=status::failure"
-        fi
+        mv config/${{matrix.target}}.config openwrt/.config
 
     - name: Download package
       id: package
