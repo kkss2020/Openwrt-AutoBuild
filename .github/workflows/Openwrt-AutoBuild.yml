@@ -63,22 +63,22 @@ jobs:
       run: |
         mv user/${{matrix.target}}/config.diff openwrt/.config
         
-        if [ -n "$(ls -A "uesr/default/patches" 2>/dev/null)" ]; then
+        if [ -n "$(ls -A "user/default/patches" 2>/dev/null)" ]; then
         (
-          find "uesr/default/patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d 'openwrt' -p0 --forward"
+          find "user/default/patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d 'openwrt' -p0 --forward"
         )
         fi
 
-        if [ -n "$(ls -A "uesr/${{matrix.target}}/patches" 2>/dev/null)" ]; then
+        if [ -n "$(ls -A "user/${{matrix.target}}/patches" 2>/dev/null)" ]; then
         (
-          find "uesr/${{matrix.target}}/patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d 'openwrt' -p0 --forward"
+          find "user/${{matrix.target}}/patches" -type f -name '*.patch' -print0 | sort -z | xargs -I % -t -0 -n 1 sh -c "cat '%'  | patch -d 'openwrt' -p0 --forward"
         )
         fi
         
-        if [ -f "uesr/${{matrix.target}}/custom.sh" ]; then
+        if [ -f "user/${{matrix.target}}/custom.sh" ]; then
         (
            cd openwrt
-           /bin/bash "${BUILDER_PROFILE_DIR}/custom.sh"
+           /bin/bash "../custom.sh"
          )
          fi
 
