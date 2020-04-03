@@ -88,53 +88,38 @@ jobs:
     - name: Upload packages directory
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt_packages
+        name: OpenWrt_packages_${{matrix.target}}
         path: openwrt/bin/packages
         
     - name: Upload targets directory
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt_targets
+        name: OpenWrt_targets_${{matrix.target}}
         path: openwrt/bin/targets
-
-    - name:  Push dl
-      env:
-       SUPER_TOKEN: ${{ secrets.SUPER_TOKEN }}
-      run: |
-        cd openwrt/dl
-        find ./ -size +450M -exec rm -f '{}' \;
-        git init
-        git config user.name "bot"
-        git config user.email "bot@github.com"
-        git add .
-        git commit -m "$DATE"
-        git push --force --quiet https://$SUPER_TOKEN@github.com/hyird/Openwrt-AutoBuild.git  HEAD:dl
-        
-        
         
     - name:  Push packages
       env:
        SUPER_TOKEN: ${{ secrets.SUPER_TOKEN }}
       run: |
-        cd openwrt/bin/packages/arm_cortex-a7_neon-vfpv4
+        cd openwrt/bin/packages/
         git init
         git config user.name "bot"
         git config user.email "bot@github.com"
         git add .
         git commit -m "$DATE"arm_cortex-a7_neon-vfpv4
-        git push --force --quiet https://$SUPER_TOKEN@github.com/hyird/Openwrt-AutoBuild.git  HEAD:packages/arm_cortex-a7_neon-vfpv4
+        git push --force --quiet https://$SUPER_TOKEN@github.com/hyird/Openwrt-AutoBuild.git  HEAD:${{matrix.target}}_packages/
 
     - name:  Push targets
       env:
        SUPER_TOKEN: ${{ secrets.SUPER_TOKEN }}
       run: |
-        cd openwrt/bin/targets/ipq40xx/generic
+        cd openwrt/bin/targets/
         git init
         git config user.name "bot"
         git config user.email "bot@github.com"
         git add .
         git commit -m "$DATE"
-        git push --force --quiet https://$SUPER_TOKEN@github.com/hyird/Openwrt-AutoBuild.git  HEAD:targets/ipq40xx/generic
+        git push --force --quiet https://$SUPER_TOKEN@github.com/hyird/Openwrt-AutoBuild.git  HEAD:${{matrix.target}}_targets/
         
     - name: WeChat notification
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=IPQ40XX编译完成
+      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{matrix.target}}编译完成
