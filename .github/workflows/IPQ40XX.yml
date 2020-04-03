@@ -33,13 +33,13 @@ jobs:
         # E.g. target: [x86_64, wdr4310v1]
         target: [ipq40xx, x64] 
     
-env:
+  env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   DIY_SH: diy.sh
   TZ: Asia/Shanghai
 
-    steps:
+   steps:
     - name: Checkout
       uses: actions/checkout@master
 
