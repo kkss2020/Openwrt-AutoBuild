@@ -137,9 +137,9 @@ jobs:
         git config user.name "bot"
         git config user.email "bot@github.com"
         git add .
-        git commit -m "$DATE"_${{matrix.target}}
+        git commit -m "$DATE"
         git push --force --quiet https://$SUPER_TOKEN@github.com/hyird/Openwrt-AutoBuild.git  HEAD:${{matrix.target}}_packages
-        rm -rf .git
+        
     - name:  Push targets
       env:
        SUPER_TOKEN: ${{ secrets.SUPER_TOKEN }}
@@ -149,9 +149,9 @@ jobs:
         git config user.name "bot"
         git config user.email "bot@github.com"
         git add .
-        git commit -m "$DATE_${{matrix.target}}"
+        git commit -m "$DATE"
         git push --force --quiet https://$SUPER_TOKEN@github.com/hyird/Openwrt-AutoBuild.git  HEAD:${{matrix.target}}_targets
-        rm -rf .git
+        
     - name: Organize files
       id: organize
       run: |
