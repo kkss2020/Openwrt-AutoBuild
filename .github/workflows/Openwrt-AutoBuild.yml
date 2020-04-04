@@ -73,6 +73,14 @@ jobs:
         )
         fi
 
+         echo "Copying base files..."
+         if [ -n "$(ls -A "user/default/files" 2>/dev/null)" ]; then
+         cp -r -f user/default/files/" "openwrt/"
+         fi
+         if [ -n "$(ls -A "user/${{matrix.target}}/files" 2>/dev/null)" ]; then
+         cp -r -f user/${{matrix.target}}/files/" "openwrt/"
+         fi
+
         if [ -f "user/default/custom.sh" ]; then
         (
            cd openwrt
@@ -86,6 +94,8 @@ jobs:
            /bin/bash "../user/${{matrix.target}}/custom.sh"
          )
          fi
+
+
 
     - name: Download package
       id: package
