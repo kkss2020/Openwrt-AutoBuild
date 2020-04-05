@@ -8,7 +8,7 @@ Build OpenWrt using GitHub Actions
 
 [Applications 添加插件应用说明-L大](https://www.right.com.cn/forum/thread-3682029-1-1.html)
 
-[hyird/Openwrt-AutoBuild](http://op.hyird.xyz/)
+[hyird/All-usb.ipv6](http://op.hyird.xyz/)
 
 二次编译：
 ```bash
