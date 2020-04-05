@@ -1,7 +1,4 @@
 # Actions-OpenWrt
-
-Build OpenWrt using GitHub Actions
-
 [Read the details in my blog (in Chinese) | 中文教程](https://p3terx.com/archives/build-openwrt-with-github-actions.html)
 
 [会本地编译的情况下，怎么用GitHub Actions云编译？](https://github.com/coolsnowwolf/lede/issues/2288)
