@@ -19,14 +19,17 @@ make defconfig
 make -j8 download
 make -j$(($(nproc) + 1)) V=s
 ```
-
 如果需要重新配置：
 ```bash
 rm -rf ./tmp && rm -rf .config
 make menuconfig
 make -j$(($(nproc) + 1)) V=s
 ```
-
+差异文件：
+```bash
+make defconfig
+./scripts/diffconfig.sh > seed.config
+```
 ## Acknowledgments
 
 - [Microsoft](https://www.microsoft.com)
