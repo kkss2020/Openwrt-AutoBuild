@@ -142,7 +142,7 @@ jobs:
         rm -rf .git 
     - name:  Push targets
       env:
-       SUPER_TOKEN: ${{ secrets.sdf }}
+       SUPER_TOKEN: ${{ secrets.SUPER_TOKEN }}
       run: |
         cd openwrt/bin/targets/
         git init
