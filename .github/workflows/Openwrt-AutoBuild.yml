@@ -116,17 +116,17 @@ jobs:
         echo -e "3 thread compile"
         make -j3 || make -j2 V=s
 
-    - name: Upload packages directory
-      uses: actions/upload-artifact@master
-      with:
-        name: OpenWrt_packages_${{matrix.target}}
-        path: openwrt/bin/packages
+#    - name: Upload packages directory
+#      uses: actions/upload-artifact@master
+#      with:
+#        name: OpenWrt_packages_${{matrix.target}}
+#        path: openwrt/bin/packages
         
-    - name: Upload targets directory
-      uses: actions/upload-artifact@master
-      with:
-        name: OpenWrt_targets_${{matrix.target}}
-        path: openwrt/bin/targets
+#    - name: Upload targets directory
+#      uses: actions/upload-artifact@master
+#      with:
+#        name: OpenWrt_targets_${{matrix.target}}
+#        path: openwrt/bin/targets
 
     - name: Upload firmware directory
       uses: actions/upload-artifact@master
