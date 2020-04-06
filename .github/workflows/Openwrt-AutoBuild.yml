@@ -114,7 +114,7 @@ jobs:
       run: |
         cd openwrt
         echo -e "3 thread compile"
-        make -j3 || make -j1 V=s
+        make -j3 || make -j2 V=s
 
     - name: Upload packages directory
       uses: actions/upload-artifact@master
@@ -127,7 +127,13 @@ jobs:
       with:
         name: OpenWrt_targets_${{matrix.target}}
         path: openwrt/bin/targets
-        
+
+    - name: Upload firmware directory
+      uses: actions/upload-artifact@master
+      with:
+        name: OpenWrt_firmware
+        path: ${{ env.FIRMWARE }}
+     
     - name:  Push packages
       env:
        SUPER_TOKEN: ${{ secrets.SUPER_TOKEN }}
