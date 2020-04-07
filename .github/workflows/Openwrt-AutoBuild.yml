@@ -2,7 +2,7 @@ name: Openwrt-AutoBuild
 
 on:
   release:
-    types: [published]
+    types: published
   push:
     branches:
       - master
