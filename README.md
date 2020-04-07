@@ -26,6 +26,7 @@ make -j$(($(nproc) + 1)) V=s
 ```bash
 make defconfig
 ./scripts/diffconfig.sh > seed.config
+cat seed.config
 ```
 ## Acknowledgments
 
