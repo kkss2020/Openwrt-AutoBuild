@@ -1,13 +1,13 @@
 name: Openwrt-AutoBuild
 
 on:
-  release:
-    types: published
+#  release:
+#    types: [published]
   push:
     branches:
       - master
     paths:
-      - 'config.diff'
+      - 'start'
   schedule:
     - cron: 50 7 1/6 * *
   watch:
