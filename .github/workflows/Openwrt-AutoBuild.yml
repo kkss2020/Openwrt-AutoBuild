@@ -6,7 +6,7 @@ on:
   push:
     branches:
       - master
-    paths:
+#    paths:
       - 'config.diff'
   schedule:
     - cron: 50 7 1/6 * *
