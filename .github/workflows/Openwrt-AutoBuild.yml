@@ -155,5 +155,5 @@ jobs:
         git push --force --quiet https://$SUPER_TOKEN@github.com/kkss2020/Openwrt-AutoBuild.git  HEAD:${{matrix.target}}_targets
         rm -rf .git
         
-    - name: WeChat notification
-      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{matrix.target}}编译完成
+#    - name: WeChat notification
+#      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{secrets.target}}编译完成
