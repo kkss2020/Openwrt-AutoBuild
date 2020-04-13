@@ -20,8 +20,6 @@ env:
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
 
-  TZ: Asia/Shanghai
-
 jobs:
   build:
     runs-on: ubuntu-latest
