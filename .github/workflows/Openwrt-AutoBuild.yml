@@ -16,6 +16,7 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
+  UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
 
 jobs:
@@ -155,5 +156,12 @@ jobs:
         git push --force --quiet https://$SUPER_TOKEN@github.com/kkss2020/Openwrt-AutoBuild.git  HEAD:${{matrix.target}}_targets
         rm -rf .git
         
+    - name: Upload firmware directory
+      uses: actions/upload-artifact@master
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: OpenWrt_firmware
+        path: ${{ env.FIRMWARE }}
+    
 #    - name: WeChat notification
 #      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{secrets.target}}编译完成
