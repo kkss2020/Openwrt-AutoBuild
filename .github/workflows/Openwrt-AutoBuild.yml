@@ -1,15 +1,16 @@
 name: Openwrt-AutoBuild
 
 on:
-#  release:
-#    types: [published]
+  repository_dispatch:
+  release:
+    types: published
   push:
     branches:
       - master
     paths:
-      - 'start'
+      - '.config'
   schedule:
-    - cron: 50 7 1/6 * *
+    - cron: 50 7 * * 5
   watch:
     types: [started]
 
@@ -119,44 +120,6 @@ jobs:
         make -j$(nproc) || make -j1 V=s
         echo "::set-output name=status::success"
         
-#    - name: Upload packages directory
-#      uses: actions/upload-artifact@master
-#      with:
-#        name: OpenWrt_packages_${{matrix.target}}
-#        path: openwrt/bin/packages
-        
-#    - name: Upload targets directory
-#      uses: actions/upload-artifact@master
-#      with:
-#        name: OpenWrt_targets_${{matrix.target}}
-#        path: openwrt/bin/targets
-        
-    - name:  Push packages
-      env:
-       SUPER_TOKEN: ${{ secrets.SUPER_TOKEN }}
-      run: |
-        cd openwrt/bin/packages/
-        git init
-        git config user.name "bot"
-        git config user.email "bot@github.com"
-        git add .
-        git commit -m "$DATE"
-        git push --force --quiet https://$SUPER_TOKEN@github.com/kkss2020/Openwrt-AutoBuild.git  HEAD:${{matrix.target}}_packages
-        rm -rf .git 
-    - name:  Push targets
-      env:
-       SUPER_TOKEN: ${{ secrets.SUPER_TOKEN }}
-      run: |
-        cd openwrt/bin/targets/
-        git init
-        git config user.name "bot"
-        git config user.email "bot@github.com"
-        git add .
-        git commit -m "$DATE"
-        git push --force --quiet https://$SUPER_TOKEN@github.com/kkss2020/Openwrt-AutoBuild.git  HEAD:${{matrix.target}}_targets
-        rm -rf .git
-    
-
     - name: Upload bin directory
       uses: actions/upload-artifact@master
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
@@ -172,6 +135,33 @@ jobs:
         rm -rf packages
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
+                
+#    - name:  Push packages
+#      env:
+#       SUPER_TOKEN: ${{ secrets.SUPER_TOKEN }}
+#      run: |
+#        cd openwrt/bin/packages/
+#        git init
+#        git config user.name "bot"
+#        git config user.email "bot@github.com"
+#        git add .
+#        git commit -m "$DATE"
+#        git push --force --quiet https://$SUPER_TOKEN@github.com/kkss2020/Openwrt-AutoBuild.git  HEAD:${{matrix.target}}_packages
+#        rm -rf .git 
+        
+    - name:  Push targets
+      env:
+       SUPER_TOKEN: ${{ secrets.SUPER_TOKEN }}
+      run: |
+        cd openwrt/bin/targets/
+        git init
+        git config user.name "bot"
+        git config user.email "bot@github.com"
+        git add .
+        git commit -m "$DATE"
+        git push --force --quiet https://$SUPER_TOKEN@github.com/kkss2020/Openwrt-AutoBuild.git  HEAD:${{matrix.target}}_targets
+        rm -rf .git
+
         
     - name: Upload firmware directory
       uses: actions/upload-artifact@master
