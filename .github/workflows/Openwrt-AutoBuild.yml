@@ -1,9 +1,8 @@
 name: Openwrt-AutoBuild
 
 on:
-  repository_dispatch:
   release:
-    types: published
+    types: [published]
   push:
     branches:
       - master
