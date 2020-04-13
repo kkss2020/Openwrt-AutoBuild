@@ -16,7 +16,10 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
+  UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
+  TZ: Asia/Shanghai
+
   TZ: Asia/Shanghai
 
 jobs:
@@ -129,7 +132,29 @@ jobs:
 #      with:
 #        name: OpenWrt_targets_${{matrix.target}}
 #        path: openwrt/bin/targets
+        
 
+    - name: Upload bin directory
+      uses: actions/upload-artifact@master
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      with:
+        name: OpenWrt_bin
+        path: openwrt/bin
+
+    - name: Organize files
+      id: organize
+      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      run: |
+        cd openwrt/bin/targets/*/*
+        rm -rf packages
+        echo "::set-env name=FIRMWARE::$PWD"
+        echo "::set-output name=status::success"
+    - name: Upload firmware directory
+      uses: actions/upload-artifact@master
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: OpenWrt_firmware
+        path: ${{ env.FIRMWARE }}
 
     - name:  Push packages
       env:
@@ -155,13 +180,6 @@ jobs:
         git commit -m "$DATE"
         git push --force --quiet https://$SUPER_TOKEN@github.com/kkss2020/Openwrt-AutoBuild.git  HEAD:${{matrix.target}}_targets
         rm -rf .git
-        
-    - name: Upload firmware directory
-      uses: actions/upload-artifact@master
-      if: steps.organize.outputs.status == 'success' && !cancelled()
-      with:
-        name: OpenWrt_firmware
-        path: ${{ env.FIRMWARE }}
     
 #    - name: WeChat notification
 #      run: curl https://sc.ftqq.com/${{ secrets.SCKEY }}.send?text=${{secrets.target}}编译完成
