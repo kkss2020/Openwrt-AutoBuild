@@ -42,5 +42,6 @@ cat seed.config
 - [Lean's OpenWrt](https://github.com/coolsnowwolf/lede)
 - [Cowtransfer](https://cowtransfer.com)
 - [Mikubill/cowtransfer-uploader](https://github.com/Mikubill/cowtransfer-uploader)
+- [WeTransfer](https://wetransfer.com/)
 - [P3TERX/Actions-OpenWrt](https://github.com/P3TERX/Actions-OpenWrt)
 - [hyird/Openwrt-AutoBuild](https://github.com/hyird/Openwrt-AutoBuild)
