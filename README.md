@@ -44,4 +44,4 @@ cat seed.config
 - [Mikubill/cowtransfer-uploader](https://github.com/Mikubill/cowtransfer-uploader)
 - [WeTransfer](https://wetransfer.com/)
 - [P3TERX/Actions-OpenWrt](https://github.com/P3TERX/Actions-OpenWrt)
-- [hyird/Openwrt-AutoBuild](https://github.com/hyird/Openwrt-AutoBuild)
+- [hyird/Openwrt-AutoBuild](https://github.com/hyird/Action-Openwrt)
