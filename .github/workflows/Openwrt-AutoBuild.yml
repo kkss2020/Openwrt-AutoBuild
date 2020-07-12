@@ -14,7 +14,7 @@ on:
     types: [started]
 
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_URL: https://github.com/coolsnowwolf/openwrt
   REPO_BRANCH: master
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
