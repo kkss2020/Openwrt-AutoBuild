@@ -1,17 +1,15 @@
 name: Openwrt-AutoBuild
 
 on:
-  release:
-    types: [published]
-  push:
-    branches:
-      - master
-    paths:
-      - 'start'
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
   schedule:
     - cron: 50 7 * * 5
-  watch:
-    types: [started]
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/openwrt
